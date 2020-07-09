@@ -1,0 +1,143 @@
+%% Kriging Optimization--Dlane
+clear
+clc
+
+
+global S1_krig S2_krig S3_krig S4_krig S5_krig S6_krig St1_krig St2_krig St3_krig St4_krig St5_krig St6_krig Var_krig count
+global S1_est S2_est S3_est S4_est S5_est S6_est St1_est St2_est St3_est St4_est St5_est St6_est var_est
+
+count = 0;
+
+
+input = [0	0	0	0	0	2	2	2	2	2	4	4	4	4	4	6	6	6	6	6	8	8	8	8	8;
+0	2	4	6	8	0	2	4	6	8	0	2	4	6	8	0	2	4	6	8	0	2	4	6	8]';
+lb = [0,0];
+ub = [8,8];
+fittype = 1;
+SCFtype = 1;
+max_variance = 1;
+% S1
+output_S1 = [0.030448004	0.088611019	0.121240116	0.11905319	0.039189523	0.010317893	0.077038129	0.088919916	0.124790317	0.088050136	0.007924138	0.054254749	0.081792695	0.103459005	0.138067378	0.006715754	0.011084867	0.086460882	0.100046155	0.138289808	0.007505662	0.006576989	0.023698722	0.053890418	0.102647453]';
+S1_krig = f_variogram_fit(input, output_S1, lb, ub);
+% S2
+output_S2 = [0.792035159	0.52173192	0.408353482	0.544893708	0.900057015	0.941128132	0.556730124	0.521322828	0.410716716	0.68020716	0.958100228	0.640930283	0.552753016	0.485260663	0.421185783	0.969913771	0.938979719	0.525963647	0.504688978	0.416996926	0.966494389	0.971989215	0.895297641	0.753618722	0.600425786]';
+S2_krig = f_variogram_fit(input, output_S2, lb, ub);
+% S3
+output_S3 = [0.114865843	0.243895787	0.203315162	0.114873636	0.023679988	0.028683751	0.244507136	0.245024751	0.198333552	0.084285515	0.019377376	0.198722821	0.24351934	0.231474154	0.162723769	0.013136884	0.02990478	0.255010919	0.247846572	0.184671942	0.014241768	0.011756381	0.051766953	0.12152617	0.129436881]';
+S3_krig = f_variogram_fit(input, output_S3, lb, ub);
+% S4
+output_S4 = [0.000373551	0.000881911	0.000765509	0.00050779	0.000352203	0.000301809	0.000973694	0.000884747	0.000736576	0.000452419	0.000291174	0.000931969	0.000953635	0.000835738	0.000632067	0.000193486	0.000232878	0.00114455	0.000967822	0.000714857	0.000213566	0.000183286	0.000183166	0.000341328	0.00033083]';
+S4_krig = f_variogram_fit(input, output_S4, lb, ub);
+% S5
+output_S5 = [0.040125646	0.107123888	0.206981096	0.173378723	0.025381892	0.010553619	0.08409779	0.106218762	0.204930474	0.112591787	0.006888192	0.071835895	0.08517969	0.135713078	0.217065614	0.004142571	0.010936447	0.090348229	0.108741533	0.203089167	0.004516169	0.003620669	0.016322924	0.047988374	0.132318546]';
+S5_krig = f_variogram_fit(input, output_S5, lb, ub);
+% S6
+output_S6 = [0.000440398	0.000682462	0.001083783	0.000885022	0.000278969	0.000197456	0.00052975	0.0007031	0.001094826	0.000591935	0.000181837	0.000493112	0.000540482	0.000840695	0.001102071	0.000180495	0.000202351	0.000608516	0.000751906	0.001047179	0.000165336	0.000166171	0.000323424	0.000534902	0.000859304]';
+S6_krig = f_variogram_fit(input, output_S6, lb, ub);
+% St1
+output_St1 = [0.038437664	0.102056179	0.157030055	0.148603501	0.045378287	0.014053352	0.088067156	0.102357209	0.16218725	0.108706941	0.011052205	0.065758358	0.092577943	0.123975885	0.176001135	0.00915705	0.014595351	0.100473027	0.113447249	0.172065702	0.010414781	0.008939937	0.028691043	0.061853274	0.12211615]';
+St1_krig = f_variogram_fit(input, output_St1, lb, ub);
+% St2
+output_St2 = [0.810460168	0.557324847	0.442823876	0.573559614	0.910307497	0.949435623	0.592379451	0.556885621	0.445323981	0.702985852	0.96523682	0.669799051	0.58829992	0.520088669	0.454541586	0.975611425	0.947055394	0.563414807	0.541076775	0.45099204	0.973260988	0.977631985	0.906149478	0.774186115	0.623146011]';
+St2_krig = f_variogram_fit(input, output_St2, lb, ub);
+% St3
+output_St3 = [0.128528258	0.270014028	0.226027338	0.129403409	0.028089972	0.033886739	0.271282761	0.271116111	0.220363159	0.095483434	0.023786275	0.221513338	0.269850493	0.255948415	0.182101223	0.016587575	0.034954498	0.283520417	0.274333273	0.20549742	0.018333545	0.01492005	0.058813256	0.135634784	0.14471422]';
+St3_krig = f_variogram_fit(input, output_St3, lb, ub);
+% St4
+output_St4 = [0.002562614	0.003534222	0.003602688	0.002800011	0.002182968	0.002487547	0.003412532	0.003583414	0.003564669	0.002647853	0.002578197	0.003689533	0.003363368	0.003671313	0.003223374	0.002115318	0.002195199	0.004075122	0.003899309	0.003276138	0.002344112	0.00198625	0.00218736	0.003070265	0.002942396]';
+St4_krig = f_variogram_fit(input, output_St4, lb, ub);
+% St5
+output_St5 = [0.045892457	0.112835981	0.236429298	0.196476754	0.0286847	0.013370704	0.087850589	0.111944052	0.235866556	0.127458157	0.009212766	0.078764172	0.088173712	0.148280139	0.248829477	0.005944225	0.013434037	0.096726626	0.113570671	0.229493476	0.00645102	0.005303814	0.019401122	0.052058899	0.146724881]';
+St5_krig = f_variogram_fit(input, output_St5, lb, ub);
+% St6
+output_St6 = [0.002454879	0.003713582	0.004809622	0.003635344	0.002161143	0.00239067	0.003220149	0.003796965	0.004800846	0.003134175	0.002455039	0.003481027	0.003200545	0.004322539	0.004463049	0.001980405	0.002090616	0.003911904	0.004018484	0.004368117	0.002182315	0.001834774	0.00205161	0.003098974	0.003453825]';
+St6_krig = f_variogram_fit(input, output_St6, lb, ub);
+% Var
+output_var = [32.70476173	19.00876783	27.81561918	74.16587831	650.3597019	141.0934202	17.15504348	18.56535821	28.49661468	99.01037471	210.0397104	16.17941892	16.725577	19.52304552	36.97919298	328.6458909	121.3431352	13.26024313	15.06912398	26.30862114	275.8352487	373.733942	77.08472493	28.58171163	29.93679164]';
+Var_krig = f_variogram_fit(input, output_var, lb, ub);
+
+%% Historical Data
+S_1 = S1_est;
+S_2 = S2_est;
+S_3 = S3_est;
+S_4 = S4_est;
+S_5 = S5_est;
+S_6 = S6_est;
+St_1 = St1_est;
+St_2 = St2_est;
+St_3 = St3_est;
+St_4 = St4_est;
+St_5 = St5_est;
+St_6 = St6_est;
+Var = var_est;
+
+
+
+
+%% plot kriging
+% resolution = 100;
+% [xp1, xp2] = meshgrid(lb(1,1):abs(lb(1,1)-ub(1,1))/resolution:ub(1,1), ...
+%     lb(1,2):abs(lb(1,2)-ub(1,2))/resolution:ub(1,2));
+% 
+% xp(:,:,1) = xp1;
+% xp(:,:,2) = xp2;
+% xp = reshape(xp, [], 2);
+% fp_krig = f_predictkrige(xp, S1_krig);
+% fp_krig = reshape(fp_krig, resolution+1, resolution+1);
+% 
+% % figure(1)
+% % hold on
+% % contour(xp1, xp2, fp_krig,1000);
+% % hold off
+% % axis square
+% figure(2)
+% surf(xp1, xp2, fp_krig);
+% xlabel('$x_1$','interpreter','latex');
+% ylabel('$x_2$','interpreter','latex');
+% 
+% tic
+% setting
+options.conTol = 1e-6;
+options.display = 0;
+fileInfo.fName = 'obj';
+% algorithm
+result = UMDIRECT(fileInfo,lb,ub, options);
+% result
+x_best = result.xBest;
+y_best = result.fBest;
+toc
+
+% best set
+S1_best = f_predictkrige(x_best, S1_krig);
+S2_best = f_predictkrige(x_best, S2_krig);
+S3_best = f_predictkrige(x_best, S3_krig);
+S4_best = f_predictkrige(x_best, S4_krig);
+S5_best = f_predictkrige(x_best, S5_krig);
+S6_best = f_predictkrige(x_best, S6_krig);
+St1_best = f_predictkrige(x_best, St1_krig);
+St2_best = f_predictkrige(x_best, St2_krig);
+St3_best = f_predictkrige(x_best, St3_krig);
+St4_best = f_predictkrige(x_best, St4_krig);
+St5_best = f_predictkrige(x_best, St5_krig);
+St6_best = f_predictkrige(x_best, St6_krig);
+Var_best = f_predictkrige(x_best, Var_krig);
+
+opt_S = [S1_best S2_best S3_best S4_best S5_best S6_best St1_best St2_best St3_best St4_best St5_best St6_best Var_best];
+
+history = result.rect.x;
+
+
+subplot(6,1,6)
+Sobol_indice = [S1_best St1_best;S2_best St2_best;S3_best St3_best;S4_best St4_best;S5_best St5_best;S6_best St6_best];
+bar(Sobol_indice);
+set(gca, 'xticklabel', {'\theta_1','\theta_2','\theta_3','\theta_4','\theta_5','\theta_6','interpreter','latex','Fontsize',18});
+ylabel('Sensitivity','Interpreter','latex','Fontsize',11)
+xlabel('Uncertain Parameters','Interpreter','latex','Fontsize',11)
+% h = '[$x_1^*,x_2^*$]=['+'num2str(x_best(1))'+', '+'num2str(x_best(2))+]';
+h = ['[$x_1^*,x_2^*$]=[',num2str(x_best(1)),', ',num2str(x_best(2)),']',', Var = ',num2str(Var_best),' on exciting $\theta_6$'];
+% title('[$x_1^*,x_2^*$]=[5.0001,0.1140,9.9997]','Interpreter','Latex','Fontsize',13);
+title(h,'Interpreter','Latex','Fontsize',13);
+legend('MSI','TSI','Interpreter','latex','Fontsize',13)
+axis([0.514285714285714,6.485714285714286,0,0.6])
+
+
